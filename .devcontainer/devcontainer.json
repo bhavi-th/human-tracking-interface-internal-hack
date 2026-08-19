@@ -1,0 +1,100 @@
+// For format details, see https://aka.ms/devcontainer.json.
+// For config options, see https://containers.dev/implementors/json_reference/
+
+{
+	"name": "Frontend Dev",
+
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	},
+
+	"workspaceFolder": "/workspace",
+
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+
+	"runArgs": [
+		"--network=host"
+	],
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+
+				// Format on save
+				"editor.formatOnSave": true,
+
+				// TypeScript / JavaScript
+				"typescript.tsdk": "node_modules/typescript/lib",
+
+				// ESLint
+				"eslint.workingDirectories": [
+					{
+						"mode": "auto"
+					}
+				],
+
+				// Prettier
+				"prettier.requireConfig": false,
+
+				// File watching inside Docker
+				"files.watcherExclude": {
+					"**/node_modules/**": true,
+					"**/.next/**": true,
+					"**/dist/**": true,
+					"**/build/**": true
+				}
+			},
+
+			"extensions": [
+				// JavaScript / TypeScript
+				"ms-vscode.vscode-typescript-next",
+
+				// ESLint
+				"dbaeumer.vscode-eslint",
+
+				// Prettier
+				"esbenp.prettier-vscode",
+
+				// Tailwind CSS
+				"bradlc.vscode-tailwindcss",
+
+				// Docker
+				"ms-azuretools.vscode-docker",
+
+				// Git
+				"eamodio.gitlens",
+
+				// Import path autocomplete
+				"christian-kohler.path-intellisense",
+
+				// npm package management
+				"christian-kohler.npm-intellisense"
+			]
+		}
+	},
+
+	"forwardPorts": [
+		3000,
+		5173,
+		4173
+	],
+
+	"portsAttributes": {
+		"3000": {
+			"label": "Next.js",
+			"onAutoForward": "notify"
+		},
+		"5173": {
+			"label": "Vite",
+			"onAutoForward": "notify"
+		},
+		"4173": {
+			"label": "Vite Preview",
+			"onAutoForward": "notify"
+		}
+	}
+
+	// "remoteUser": "devcontainer"
+}
